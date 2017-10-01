@@ -3,6 +3,7 @@
 const char *FILE_BACKUP_DIP="diputados.bkp";
 const char *FILE_BACKUP_SES="sesiones.bkp";
 const char *FILE_BACKUP_PRO="proyectos.bkp";
+// Configuraciones
 void CopiarDip_al_bkp(){
    FILE *Fdip;
    FILE *FdipB;
