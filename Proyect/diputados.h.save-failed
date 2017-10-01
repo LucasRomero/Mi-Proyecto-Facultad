@@ -1,0 +1,227 @@
+#ifndef DIPUTADOS_H_INCLUDED
+#define DIPUTADOS_H_INCLUDED
+
+
+struct Diputado{
+    char Codigo_Diputado[5];
+    char Apellido[50];
+    char nombre[50];
+    int Cod_Partido;
+    int Cod_Prov;
+    int Fin_Man;
+    };
+const char *FILE_DIPUTADOS = "diputados.dat";
+/// FUNCIONES
+bool NumPartido(int);
+bool NumProv(int);
+void Menu_Diputados();
+int buscarArticulo(char [5]);
+bool NuevoDiputado();
+void ListarDiputados();
+void MostrarDiputados();
+bool FinMandato(int);
+void ListarD_X_COD();
+//-------------------- Poner bien los
+void ListarDiputado(Diputado);
+bool buscarP(int);
+/// Comienzo de Codigo
+bool NuevoDiputado(){
+    Diputado reg;
+    bool par,prov,fin;
+    int pos;
+    FILE *p;
+    p=fopen(FILE_DIPUTADOS,"ab");
+    cout << "Codigo Diputado " <<endl;
+    cin >> reg.Codigo_Diputado;
+    pos=buscarArticulo(reg.Codigo_Diputado);
+    while(pos>=0){
+    cout << "Codigo Diputado no valido. Ingrese uno valido nuevamente " <<endl;
+    cin >> reg.Codigo_Diputado;
+    pos=buscarArticulo(reg.Codigo_Diputado);
+    }
+    cout << "Apellido " <<endl;
+    cin >> reg.Apellido;
+    cout << "Nombre " <<endl;
+    cin >> reg.nombre;
+    cout << "Codigo Partido Politico " <<endl;
+    cin >> reg.Cod_Partido;
+    par=NumPartido(reg.Cod_Partido);
+    while(par){
+        cout << "El Codigo del Partido debe estar entre 1 y 10 , Vuelve a Intentarlo" << endl;
+        cout << "Codigo Partido Politico" <<endl;
+        cin >> reg.Cod_Partido;
+        par=NumPartido(reg.Cod_Partido);
+    }
+    cout << "Codigo Provincia " <<endl;
+    cin >> reg.Cod_Prov;
+    prov=NumProv(reg.Cod_Prov);
+    while(prov){
+        cout << "El Codigo de la Provincia debe estar entre 1 y 24 , Vuelve a Intertarlo" << endl;
+        cin >> reg.Cod_Prov;
+        prov=NumProv(reg.Cod_Prov);
+    }
+    cout << "Anio de Finalizacion del Mandato " << endl;
+    cin >> reg.Fin_Man;
+    fin=FinMandato(reg.Fin_Man);
+    while(fin){
+        cout << "Anio Erroneo, Ingrese una fecha valida" << endl;
+        cin >> reg.Fin_Man;
+        fin=FinMandato(reg.Fin_Man);
+    }
+    fwrite(&reg,sizeof reg,1,p);
+    fclose(p);
+    borrarPantalla();
+}
+bool FinMandato(int aa){
+    if(aa<=2017){
+        return true;
+    }
+    return false;
+}
+int buscarArticulo(char cod[5]){
+    struct Diputado aux;
+    int pos=0;
+    FILE *p;
+    p=fopen(FILE_DIPUTADOS,"rb");
+    if(p==NULL){
+        return -1;
+    }
+        while(fread(&aux,sizeof aux,1,p)==1){
+            if(strcmp(cod,aux.Codigo_Diputado)==0){
+                fclose(p);
+                return pos;
+                }
+                pos++;
+
+        }
+        fclose(p);
+        return -1;
+}
+bool NumPartido(int partido){
+    if(partido < 1 || partido > 10){
+        return true;
+    }
+        return false;
+}
+
+bool NumProv(int prov){
+    if(prov < 1 || prov > 24){
+        return true;
+    }
+        return false;
+}
+void ListarDiputados(){
+    Diputado reg;
+    FILE *p;
+    p=fopen(FILE_DIPUTADOS,"rb");
+    while(fread(&reg,sizeof reg,1,p)==1){
+    cout << "---------------------------" << endl;
+    cout << "Codigo de Diputado :  "<< reg.Codigo_Diputado << endl;
+    cout << "Diputado :  "<<endl;
+    cout <<"Nombre :  "<< reg.nombre<<endl;
+    cout <<"Apellido : " << reg.Apellido << endl;
+    }
+    fclose(p);
+    system("pause");
+    borrarPantalla();
+}
+/// -------------facu--------------------
+
+void ListarDiputado(Diputado reg){
+    cout << "---------------------------" << endl;
+    cout << "Codigo de Diputado : "<< reg.Codigo_Diputado << endl;
+    cout << "Diputado : " << endl;
+    cout << "Nombre: " << reg.nombre<<endl;
+    cout << "Apellido:  "<<reg.Apellido << endl<<endl;
+}
+void mostrarPorCodigo(){
+ struct Diputado dip;
+ FILE *pFile;
+ int codigo;
+ bool val;
+ cout << "CODIGO: " << endl;
+ cin >> codigo;
+ val=buscarP(codigo);
+ while(val){
+cout << "CODIGO de Partido No Valido, Vuelve a Intentar " << endl;
+ cin >> codigo;
+ val=buscarP(codigo);
+ }
+ pFile=fopen(FILE_DIPUTADOS,"rb");
+        while(fread(&dip,sizeof dip,1,pFile)==1){
+            if(codigo == dip.Cod_Partido){
+                ListarDiputado(dip);
+            }
+        }
+    fclose(pFile);
+}
+bool buscarP(int cod){
+    struct Diputado aux;
+    FILE *p;
+    p=fopen(FILE_DIPUTADOS,"rb");
+        while(fread(&aux,sizeof aux,1,p)==1){
+            if(cod==aux.Cod_Partido){
+                fclose(p);
+                return false;
+                }
+                fclose(p);
+                return true;
+        }
+        fclose(p);
+}
+
+///-----------------------Despues Borrar (es la modificacion de un diputado)
+
+int modificar(){
+    char cod[5];
+    int pos;
+    cout <<"Numero de diputado a cambiar"<<endl;
+    cin >> cod;
+    pos=buscarArticulo(cod);
+    while(pos<0){
+    cout << "Codigo Diputado no valido. Ingrese uno valido nuevamente " <<endl;
+    cin >> cod;
+    pos=buscarArticulo(cod);
+    }
+}
+    char cod[5];
+    int pos;
+    cout <<"Numero de diputado a cambiar"<<endl;
+    cin >> cod;
+pos=buscarArticulo(cod);
+int modificar(){
+}
+void Menu_Diputados(){
+ int opc;
+    while(opc!=0){
+    cout << "           MENU DIPUTADOS" << endl << "         ---------------------" << endl;
+    cout << "           1) NUEVO DIPUTADO" << endl;
+    cout << "           2) LISTAR TODOS LOS DIPUTADOS" << endl;
+    cout << "           3) LISTAR DIPUTADO POR CODIGO DE PARTIDO" << endl;
+    cout << "           4) MODIFICAR el Codigo de un Diputado" << endl;                                              /// despues borrar el 4
+    cout << "         --------------------" << endl;
+    cout << "           0) VOLVER AL MENU ANTERIOR" << endl;
+    cout << "           OPCION: ";
+    cin >> opc;
+    borrarPantalla();
+        switch(opc){
+    case 1:
+        NuevoDiputado();
+        break;
+    case 2:
+        ListarDiputados();
+        break;
+    case 3:
+        mostrarPorCodigo();
+        break;
+                                                                                            /// despues borrar el 4
+    case 4:
+        break;
+    case 0:
+        break;
+        }/// switch case 1
+    } /// while case 1
+
+}
+
+#endif // DIPUTADOS_H_INCLUDED
