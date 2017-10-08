@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1506607093 source:c:\users\lucas\desktop\tp\proyect\main.cpp
+1507072070 source:c:\users\lucas\desktop\tp\proyect\main.cpp
 	<iostream>
 	<cstdlib>
 	<cstdio>
@@ -12,24 +12,25 @@
 	"ingresos.h"
 	"sesiones.h"
 	"configuraciones.h"
+	"reportes.h"
 
 1505872123 ciones.h"
 
 1503848211 c:\users\lucas\desktop\tp\proyect\funciones.h
 
-1506642808 c:\users\lucas\desktop\tp\proyect\mesages.h
+1507071912 c:\users\lucas\desktop\tp\proyect\mesages.h
 
-1506642571 c:\users\lucas\desktop\tp\proyect\diputados.h
+1507214701 c:\users\lucas\desktop\tp\proyect\diputados.h
 
-1506642646 c:\users\lucas\desktop\tp\proyect\proyect.h
+1507159913 c:\users\lucas\desktop\tp\proyect\proyect.h
 
 1506632965 c:\users\lucas\desktop\tp\proyect\fecha.h
 
 1505062420 c:\users\lucas\desktop\tp\proyect\ingresos.h
 
-1506642720 c:\users\lucas\desktop\tp\proyect\sesiones.h
+1507071193 c:\users\lucas\desktop\tp\proyect\sesiones.h
 
-1506877664 c:\users\lucas\desktop\tp\proyect\configuraciones.h
+1507160572 c:\users\lucas\desktop\tp\proyect\configuraciones.h
 
 1505953459 source:/media/pato/A42A990F2A98DF9A/Users/Lucas/Desktop/TP/Proyect/main.cpp
 	<iostream>
@@ -59,4 +60,6 @@
 1505597753 /media/pato/A42A990F2A98DF9A/Users/Lucas/Desktop/TP/Proyect/configuraciones.h
 
 1506610611 c:\users\lucas\desktop\tp\proyect\structs.h
+
+1507214781 c:\users\lucas\desktop\tp\proyect\reportes.h
 

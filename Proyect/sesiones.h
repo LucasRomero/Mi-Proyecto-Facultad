@@ -315,6 +315,10 @@ Menu_Sesiones(){
      case 4:
         SesionXCod();
       break;
+      default:
+         cout <<"No es una opcion valida, Vuelva a intentarlo" <<endl<<endl;
+         system("pause");
+         borrarPantalla();
        }
      }
    }

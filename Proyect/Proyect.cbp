@@ -39,6 +39,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="mesages.h" />
 		<Unit filename="proyect.h" />
+		<Unit filename="reportes.h" />
 		<Unit filename="sesiones.h" />
 		<Unit filename="structs.h" />
 		<Extensions>

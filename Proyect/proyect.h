@@ -87,6 +87,11 @@ void ListaProyectos(){
     cout << "Dia  " <<reg.Fec.dia << endl;
     cout <<"Mes:  "<< reg.Fec.mes << endl;
     cout <<"Anio:  "<< reg.Fec.anio << endl;
+    if(reg.Estado){
+      cout <<"Estado:  Activo"<<endl;
+    }else{
+    cout <<"Estado:  No Activo"<<endl;
+    }
     }
     pclose(p);
     system("pause");
@@ -123,6 +128,7 @@ void mostrarXCodigo(){
     if(pos<0){
 cout << "CODIGO de Diputado Solicitado Erroneo, No tiene proyectos Iniciados " << endl;
 system("pause");
+borrarPantalla();
 return;
     }
 pos1=buscarArticulo(codigo);
@@ -159,6 +165,71 @@ int CuentaElementos(){
     return tamanioarchivo/sizeof(aux) ;
     fclose(p);
 }
+
+///--------------------------------------------------------------------Agregado para hacer la baja logica de proyecto(desde aca empieza el codigo)
+/*
+proyecto leerproyecto(int);
+proyecto leerproyecto(int);
+bool CambiarEstadoProyecto(proyecto pro,int);
+int BuscarProyecto(int cod){
+   FILE *p;
+   int pos=0;
+   proyecto pro;
+   p=fopen(FILE_PROYECTOS,"rb");
+   if(p==NULL){
+      cout <<"error para abrir el archivo"<<endl;
+      return -1;
+   }
+   while(fread(&pro,sizeof(proyecto),1,p)==1){
+      if(pro.Cod_Proyecto==cod){
+            fclose(p);
+            return pos;
+      }
+      pos++;
+   }
+   fclose(p);
+   return -1;
+}
+void bajaProyecto(){
+   int cod,pos;
+   bool val;
+   cout <<"Codigo de Proyecto que va a dar de baja" <<endl;
+   cin>>cod;
+   proyecto pro;
+   pos=BuscarProyecto(cod);
+   if(pos<0){
+      cout <<"El Proyecto no existe"<<endl;
+      system("pause");
+   }else{
+   pro=leerproyecto(pos);
+   val=CambiarEstadoProyecto(pro,pos);
+   if(val){
+      cout <<"Se ha cambiado con exito el Estado de Proyecto"<<endl;
+      }
+   }
+}
+proyecto leerproyecto(int pos){
+    proyecto reg;
+    FILE *p=fopen(FILE_PROYECTOS,"rb");
+    fseek(p,pos*sizeof(proyecto),SEEK_SET);
+    fread(&reg, sizeof(proyecto), 1, p);
+    fclose(p);
+    return reg;
+}
+bool CambiarEstadoProyecto(proyecto pro,int pos){ /// preguntar si es necesario buscar otra ves el diputado si  en la funcion de arriba, ya deberia estar encontrado.fijarse como hacer eso, preguntar asi ahorro una funcion
+    FILE *p;
+    p=fopen(FILE_PROYECTOS,"rb+");
+   if(p==NULL){
+    return false;
+    }
+    fseek(p,sizeof(pro)*pos,SEEK_SET);
+    pro.Estado=false;
+    fwrite(&pro,sizeof pro,1,p);
+    fclose(p);
+    return true;
+}
+*/
+///-------------------------------Y aca termina------------------------------
 void Menu_Proyectos(){
     int opc;
         while(opc!=0){
@@ -181,9 +252,15 @@ void Menu_Proyectos(){
     case 3:
         mostrarXCodigo();
         break;
+    case 4:
+      //bajaProyecto();
+      break;
     case 0:
-
         break;
+    default:
+         cout <<"No es una opcion valida, Vuelva a intentarlo" <<endl<<endl;
+         system("pause");
+         borrarPantalla();
         }
     }
 }

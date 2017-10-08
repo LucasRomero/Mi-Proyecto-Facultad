@@ -11,8 +11,8 @@ using namespace std;
 #include "ingresos.h"
 #include "sesiones.h"
 #include "configuraciones.h"
-int main()
-{
+#include "reportes.h"
+int main(){
     int opc;
     while(true)
     {
@@ -39,6 +39,7 @@ int main()
             Menu_Sesiones();
             break;
         case 4:
+           Menu_Reportes();
             break;
         case 5:
             Menu_Configuraciones();
@@ -54,9 +55,7 @@ int main()
             system("pause");
             borrarPantalla();
             break;
-        }/// switch principal
-
-    }/// while
-
+        }
+    }
     return 0;
 }

@@ -3,28 +3,26 @@
 const char *FILE_BACKUP_DIP="diputados.bkp";
 const char *FILE_BACKUP_SES="sesiones.bkp";
 const char *FILE_BACKUP_PRO="proyectos.bkp";
-// Configuraciones
-void CopiarDip_al_bkp(){
+bool CopiarDip_al_bkp(){
    FILE *Fdip;
    FILE *FdipB;
    Diputado dip;
    Fdip=fopen(FILE_DIPUTADOS,"rb");
    if(Fdip==NULL){
       cout <<"Error Open Diputados"<<endl;
-      return;
+      return false;
    }
    FdipB=fopen(FILE_BACKUP_DIP,"wb");
    if(FdipB==NULL){
       cout <<"Error Open Diputados.BKP"<<endl;
-      return;
+      return false;
    }
    while(fread(&dip,sizeof(dip),1,Fdip)==1){
     fwrite(&dip,sizeof(dip),1,FdipB);
    }
    fclose(Fdip);
    fclose(FdipB);
-}
-void CopiarPro_al_bkp(){
+   //-----------
    FILE *Fpro;
    FILE *FproB;
    proyecto pro;
@@ -32,20 +30,19 @@ void CopiarPro_al_bkp(){
    Fpro=fopen(FILE_PROYECTOS,"rb");
    if(Fpro==NULL){
       cout <<"Error Open Proyecto"<<endl;
-      return;
+      return false;
    }
    FproB=fopen(FILE_BACKUP_PRO,"wb");
    if(FproB==NULL){
       cout <<"Error Open Proyecto.BKP"<<endl;
-      return;
+      return false;
    }
    while(fread(&pro,sizeof(pro),1,Fpro)==1){
     fwrite(&pro,sizeof(pro),1,FproB);
    }
    fclose(Fpro);
    fclose(FproB);
-}
-void CopiarSes_al_bkp(){
+   //-------------
    FILE *Fses;
    FILE *FsesB;
    sesion s;
@@ -53,32 +50,33 @@ void CopiarSes_al_bkp(){
    Fses=fopen(FILE_SESIONES,"rb");
    if(Fses==NULL){
       cout <<"Error Open Sesiones"<<endl;
-      return;
+      return false;
    }
    FsesB=fopen(FILE_BACKUP_SES,"wb");
    if(FsesB==NULL){
       cout <<"Error Open Sesiones.BKP"<<endl;
-      return;
+      return false;
    }
    while(fread(&s,sizeof(s),1,Fses)==1){
     fwrite(&s,sizeof(s),1,FsesB);
    }
    fclose(Fses);
    fclose(FsesB);
+   return true;
 }
-void Restaurar(){
+bool Restaurar(){
    FILE *Fses;
    FILE *FsesB;
    sesion s;
    FsesB=fopen(FILE_BACKUP_SES,"rb");
    if(FsesB==NULL){
       cout <<"Error Open Sesiones.BKP"<<endl;
-      return;
+      return false;
    }
    Fses=fopen(FILE_SESIONES,"wb");
    if(Fses==NULL){
       cout <<"Error Open Sesiones"<<endl;
-      return;
+      return false;
    }
    while(fread(&s,sizeof(s),1,FsesB)==1){
     fwrite(&s,sizeof(s),1,Fses);
@@ -92,12 +90,12 @@ void Restaurar(){
    FproB=fopen(FILE_BACKUP_PRO,"rb");
    if(FproB==NULL){
       cout <<"Error Open Proyecto.BKP"<<endl;
-      return;
+      return false;
    }
    Fpro=fopen(FILE_PROYECTOS,"wb");
    if(Fpro==NULL){
       cout <<"Error Open Proyecto"<<endl;
-      return;
+      return false;
    }
    while(fread(&pro,sizeof(pro),1,FproB)==1){
     fwrite(&pro,sizeof(pro),1,Fpro);
@@ -111,19 +109,22 @@ void Restaurar(){
    FdipB=fopen(FILE_BACKUP_DIP,"rb");
    if(FdipB==NULL){
       cout <<"Error Open Diputados.BKP"<<endl;
-      return;
+      return false;
    }
    Fdip=fopen(FILE_DIPUTADOS,"wb");
    if(Fdip==NULL){
       cout <<"Error Open Diputados"<<endl;
-      return;
+      return false;
    }
    while(fread(&dip,sizeof(dip),1,FdipB)==1){
     fwrite(&dip,sizeof(dip),1,Fdip);
    }
    fclose(Fdip);
    fclose(FdipB);
+   return true;
 }
+
+// TODO LO QUE  ESTA COMENTADO, ES POR QUE ERA LA VERSION ANTERIOR YA QUE TODO EL NUEVO CODIGO ES MUCHO MEJOR, FACIL DE ENTENDER Y POCO CODIGO. SINO SERIA BORRAR Y PONER LO QUE ESTA COMENTADO, Y FUNCIONA IGUAL
 /*bool CopiaDip_Al_Vec(Diputado *);
 bool CopiaPro_Al_Vec(proyecto *);
 bool CopiaSes_Al_Vec(sesion *);
@@ -391,18 +392,28 @@ void Menu_Configuraciones(){
       switch (opc)
       {
       case 1:
-         CopiarDip_al_bkp();
-         CopiarPro_al_bkp();
-         CopiarSes_al_bkp();
+         if(CopiarDip_al_bkp()){
+            cout <<"          El BackUp se pudo Realizar"<<endl;
+            system("pause");
+            borrarPantalla();
+         }
          //BackUp();
          break;
       case 2:
-         Restaurar();
+         if(Restaurar()){
+         cout <<"       Todo se Restauro bien"<<endl;
+         system("pause");
+         borrarPantalla();
+         }
          //mostrar();
          //RestaurarBackUp();
          break;
       case 0:
          break;
+      default:
+         cout <<"No es una opcion valida, Vuelva a intentarlo" <<endl<<endl;
+         system("pause");
+         borrarPantalla();
       }
    }
 }

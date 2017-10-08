@@ -37,7 +37,6 @@ bool NuevoDiputado(){
     cin >> reg.Codigo_Diputado;
     pos=buscarArticulo(reg.Codigo_Diputado);
     }
-
     cout << "Apellido " <<endl;
     cin.ignore();
     cin.getline(reg.Apellido,50);
@@ -250,7 +249,7 @@ void Baja(){
     if(val){
         cout <<"Cambiado con Exito "<<endl;
         system("pause");
-    }
+     }
     }
     borrarPantalla();
   }
@@ -499,7 +498,7 @@ void Menu_Diputados(){
     cout << "           2) LISTAR TODOS LOS DIPUTADOS" << endl;
     cout << "           3) LISTAR DIPUTADO POR CODIGO DE PARTIDO" << endl;
     cout << "           4) BAJA A UN DIPUTADO " << endl;
-    cout << "           5) MODIFICAR el Codigo de un Diputado" << endl;                                              /// despues borrar el 4
+    cout << "           5) MODIFICAR EL CODIGO DE UN DIPUTADO (borrar)" << endl;                                              /// despues borrar el 5
     cout << "           6) LISTAR DIPUTADOS POR ORDEN ALFABETICO" << endl;
     cout << "           7) LISTAR DIPUTADOS POR ANIO DE FINALIZACION" << endl;
     cout << "           8) DIPUTADO POR FINALIZACION DE MANDATO (NUEVO ARCHIVO)" <<endl;
@@ -536,6 +535,10 @@ void Menu_Diputados(){
       break;
     case 0:
         break;
+         default:
+         cout <<"No es una opcion valida, Vuelva a intentarlo" <<endl<<endl;
+         system("pause");
+         borrarPantalla();
         }/// switch case 1
     } /// while case 1
 }
